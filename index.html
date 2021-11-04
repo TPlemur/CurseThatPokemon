@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="en"><head>
+    <link rel="manifest" href="/manifest.json">
+    <script src="draw.js"></script>
+    <script src="p5.js"></script>
+    <script src="p5.sound.min.js"></script>
+    <script src="p5.clickable.js"></script>
+    <script src="tf.js"></script>
+    <script type="module" src="AIS.js"></script>
+    <script type=module src="bundle.js"></script>
+    <link rel=stylesheet type="text/css" href="style.css">
+    <meta charset="utf-8">
+
+  </head>
+  <body>
+    <!--runs the p5js sketch-->
+    <script src="sketch.js"></script>
+
+
+    <!--Vars for AIS-->
+
+    <!--loads the base image into content-img, creates a dropdown-->
+    <img id="content-img" class="centered" src="assets/BlackPika.png" height=256 style="display: none;"></img>
+
+    <!--create a slider for content image resoultion-->
+    <label for="content-img-size" style="display: none;"></label>
+    <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+    title="A bigger content image results in a more detailed output, but increases the processing time significantly."></i>
+    <input type="range" min="256" max="400" value="256" class="custom-range centered" id="content-img-size" style="display: none;" >
+    
+    <!--create a dropdown for content selection-->
+    <input id="content-select", type="file" name="name" style="display: none;"/> 
+
+    <!--create style object image-->
+    <img id="style-img" class="centered" crossorigin="anonymous" src="assets/Pikachu.png" height=256 style="display: none;"></img>
+    
+    <!--creates a slider for style image size-->
+    <label for="style-img-size" style="display: none;"></label>
+    <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top"  
+    title='Changing the size of a style image usually affects the texture "seen" by the network.'></i>
+    <input type="range" min="100" max="400" value="256" class="custom-range centered" id="style-img-size" style="display: none;">
+    
+    <!--creates a dropdown for style image selection-->
+    <select id="style-select" class="centered custom-select" style="display: none;">
+      <option value=""></option>
+    </select>
+    
+    <!--creates a checkbox(maybe, I cant see it) for making the style image square-->
+    <input id="style-img-square" type="checkbox"  style="display: none;"
+    data-toggle="tooltip" data-placement="top" 
+    title="Force image to square">
+
+    <!--creates the button for initiating stylization-->
+    <button disabled id="style-button" type="button" class="btn btn-primary btn-block" style="display: none;"></button>
+
+    <!--outpu (i hope)-->
+      <canvas id="stylized" class="centered"></canvas>
+     
+
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+
+</body></html>
