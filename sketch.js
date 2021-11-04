@@ -8,13 +8,16 @@ let current;
 let previous; 
 let paths = [];
 let StyleSelection
+let htmlContext;
 
 
 var fileIn = document.createElement('input');
 fileIn.type = 'file';
 
 function setup() {
-  createCanvas(720, 500);
+  var mainCanvas = createCanvas(720, 500);
+  var realCanvas = mainCanvas.canvas;
+  htmlContext = realCanvas.getContext("2d");
   current = createVector(0,0);
   previous = createVector(0,0);
   savedSection = get(0,0,200,200);
@@ -70,9 +73,9 @@ function draw() {
   clearDraw.draw(); //draw the other button
   //output cursed Drawing
   if(hasCursed){
-    outImg = document.getElementById('')
+    this.outImg = document.getElementById('stylized')
+    htmlContext.drawImage(this.outImg,720-210,500/2-100);
   }
-  image(savedSection,720-210,500/2-100);
   //output StyleSelection image
   image(StyleSelection,0,500-200)
 }
