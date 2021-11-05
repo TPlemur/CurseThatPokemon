@@ -66,6 +66,8 @@ function draw() {
   fill(0);
   //draw the drawing input circle
   circle (100,100,200);
+  text("Draw Here",70,210);
+  text("Please re-upload the drawing after it is downloaded", 220,330);
   //draw the color input circle
   circle (100,500-100,200);
   drawForDrawings();
