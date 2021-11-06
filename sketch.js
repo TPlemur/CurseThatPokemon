@@ -2,6 +2,7 @@
 // control bools
 let painting = false;
 let hasCursed = false;
+let isCursing = false;
 // vars used for drawing
 let next =0;
 let current;
@@ -15,16 +16,20 @@ var fileIn = document.createElement('input');
 fileIn.type = 'file';
 
 function setup() {
-  var mainCanvas = createCanvas(720, 500);
+  var mainCanvas = createCanvas(1050, 550);
   var realCanvas = mainCanvas.canvas;
   htmlContext = realCanvas.getContext("2d");
   current = createVector(0,0);
   previous = createVector(0,0);
   savedSection = get(0,0,200,200);
+  this.cusedImg;
+  this.ogFrames;
+  this.bsX = 20
+  this.bsY = 200
 
   //create dropbox for selecting color pallete
   stySel = createSelect();
-  stySel.position(50,500-10);
+  stySel.position(this.bsX +180+55,this.bsY + 315);
   stySel.option('Pikachu');
   stySel.option('Charizard');
   stySel.option('Onix');
@@ -36,6 +41,7 @@ function setup() {
   OnixPalette = loadImage('assets/Onix.png');
   EeveePalette = loadImage('assets/Eevee.png');
   StyleSelection = PikaPalette;
+  battleSwoosh = loadImage('assets/BattleSwoosh.png');
 };
 
 
@@ -62,38 +68,58 @@ function stySelChanged() {
 }
 
 function draw() {
+
+  //draw canvas w/ cursed image behind background, and grab a screenshot so it can be deformed back to round
+  if(isCursing){
+    if(frameCount === ogFrames){
+      hasCursed = true;
+      this.outImg = document.getElementById('stylized')
+      htmlContext.drawImage(this.outImg,0,0);
+      this.cursedImg = get(0,0,200,260);
+      this.cursedImg.resize(200,200);
+      isCursing = false;
+    }
+  }
+
   background(255);
+  image(battleSwoosh,bsX,bsY);
+
+  //output cursed Drawing
+  if(hasCursed){
+    image(this.cursedImg,bsX+740,bsY+50);
+  }
+  //output StyleSelection image
+  image(StyleSelection,bsX+180,bsY+ 50);
   fill(0);
-  //draw the drawing input circle
-  circle (100,100,200);
-  text("Draw Here",70,210);
-  text("Please re-upload the drawing after it is downloaded", 220,330);
-  //draw the color input circle
-  circle (100,500-100,200);
+  text("Draw Here",bsX+460+70,bsY+280);
+  text("Select Pokemon",bsX+180+55,bsY+280);
+  text("Please re-upload the drawing after it is downloaded", bsX+700,bsY+280);
+  text("The AI takes some time to think, please be patient", bsX+700,bsY+293);
   drawForDrawings();
   downloadDraw.draw(); //draw the button
   clearDraw.draw(); //draw the other button
-  //output cursed Drawing
-  if(hasCursed){
-    this.outImg = document.getElementById('stylized')
-    htmlContext.drawImage(this.outImg,720-210,500/2-100);
-  }
-  //output StyleSelection image
-  image(StyleSelection,0,500-200)
+
 }
 
 //create the button that downloads the file
 downloadDraw = new Clickable();
-downloadDraw.locate(720/2 - 65,500/2-52,2)
-downloadDraw.resize(130,50);
+downloadDraw.locate(740+40+20,200+300+1,2);
+downloadDraw.resize(120,48);
 downloadDraw.text = "Apply Colorization";
 downloadDraw.onPress = function(){
-  savedSection = get(0,0,200,200);
+  savedSection = get(bsX+460,bsY+50,200,200);
   savedSection.save("uncursedDrawing");
   fileIn.click();
 }
 
-
+//create the button that clears the drawings
+clearDraw = new Clickable();
+clearDraw.locate(460+40+20,200+300+1,2)
+clearDraw.resize(120,48);
+clearDraw.text = "Clear Drawings";
+clearDraw.onPress = function(){
+  paths = [];
+}
 
 //Do the thing with the input from the user
 fileIn.onchange = function (evt) {
@@ -105,25 +131,17 @@ fileIn.onchange = function (evt) {
   };
   fileReader.readAsDataURL(f);
   fileIn.value = '';
-  hasCursed =true;
   styleButton = document.getElementById("style-button");
   styleButton.click();
+  isCursing = true;
+  ogFrames = frameCount +10;
 };
-
-//create the button that clears the drawings
-clearDraw = new Clickable();
-clearDraw.locate(720/2 - 65,500/2 +2,2)
-clearDraw.resize(130,50);
-clearDraw.text = "Clear Drawings";
-clearDraw.onPress = function(){
-  paths = [];
-}
 
 function mousePressed() {
   //drawing stuff
   next = 0;
   //only start drawing if within the input area
-  if(mouseX>10&&mouseX<210&&mouseY>10&&mouseY<210){
+  if(mouseX>bsX+460&&mouseX<bsX+660&&mouseY>bsY+50&&mouseY<bsY+250){
     painting = true;
   }
   previous.x = mouseX;
