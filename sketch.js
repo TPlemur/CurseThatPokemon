@@ -91,7 +91,7 @@ function draw() {
     }
   }
 
-  background(255);
+  background(200,100,5);
   image(battleSwoosh,bsX,bsY);
   image(logo,80,30);
 
@@ -102,6 +102,7 @@ function draw() {
   //output StyleSelection image
   image(StyleSelection,bsX+180,bsY+ 50);
   fill(0);
+  noStroke();
   text("Draw Here",bsX+460+70,bsY+280);
   text("Select Pokemon",bsX+180+55,bsY+280);
   text("Please re-upload the drawing after it is downloaded", bsX+700,bsY+280);
