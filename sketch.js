@@ -21,7 +21,7 @@ function preload(){
 }
 
 function setup() {
-  var mainCanvas = createCanvas(1050, 550);
+  var mainCanvas = createCanvas(1055, 550);
   var realCanvas = mainCanvas.canvas;
   htmlContext = realCanvas.getContext("2d");
   current = createVector(0,0);
@@ -49,6 +49,7 @@ function setup() {
 
   //other assets
   battleSwoosh = loadImage('assets/BattleSwoosh.png');
+  logo = loadImage('assets/Logo.png');
 
   bgm.loop();
 };
@@ -92,6 +93,7 @@ function draw() {
 
   background(255);
   image(battleSwoosh,bsX,bsY);
+  image(logo,80,30);
 
   //output cursed Drawing
   if(hasCursed){
