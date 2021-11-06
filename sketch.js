@@ -168,6 +168,7 @@ fileIn.onchange = function (evt) {
   styleButton = document.getElementById("style-button");
   styleButton.click();
   isCursing = true;
+  //wait que a wait of 10 frames for the AI to think
   ogFrames = frameCount +10;
 };
 
