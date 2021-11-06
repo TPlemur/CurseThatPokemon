@@ -3,6 +3,7 @@
 let painting = false;
 let hasCursed = false;
 let isCursing = false;
+let isMute = false;
 // vars used for drawing
 let next =0;
 let current;
@@ -14,6 +15,10 @@ let htmlContext;
 
 var fileIn = document.createElement('input');
 fileIn.type = 'file';
+
+function preload(){
+  bgm = loadSound('assets/PokemonOpening.mp3');
+}
 
 function setup() {
   var mainCanvas = createCanvas(1050, 550);
@@ -41,7 +46,11 @@ function setup() {
   OnixPalette = loadImage('assets/Onix.png');
   EeveePalette = loadImage('assets/Eevee.png');
   StyleSelection = PikaPalette;
+
+  //other assets
   battleSwoosh = loadImage('assets/BattleSwoosh.png');
+
+  bgm.loop();
 };
 
 
@@ -98,7 +107,29 @@ function draw() {
   drawForDrawings();
   downloadDraw.draw(); //draw the button
   clearDraw.draw(); //draw the other button
+  muteBtn.draw();
 
+  // if(!bgm.isPlaying()){
+  //   bgm.play();
+  // }
+
+}
+
+//create the button that downloads the file
+muteBtn = new Clickable();
+muteBtn.locate(1030-50+20,150,2);
+muteBtn.resize(50,48);
+muteBtn.text = "Mute";
+muteBtn.onPress = function(){
+  if(isMute){
+    isMute = false;
+    bgm.setVolume(1.0);
+    console.log("ping");
+  }
+  else{
+    isMute = true;
+    bgm.setVolume(0.0);
+  }
 }
 
 //create the button that downloads the file
